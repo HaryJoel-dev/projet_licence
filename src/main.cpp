@@ -5,7 +5,7 @@
 LVGL_Display display;
 void setup() {
   // put your setup code here, to run once:
-  //display.begin();
+  // display.begin();
   // touch_calibration_setup();
   Serial.begin(115200);
   systemManager.init();
@@ -13,6 +13,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  //display.update();
+  // display.update();
   // touch_calibration_loop();
 }
