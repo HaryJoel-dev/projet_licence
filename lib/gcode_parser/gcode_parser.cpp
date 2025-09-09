@@ -42,45 +42,45 @@ void GcodeParser::testParse(String cmd) {
   switch (static_cast<GcodeType>(parsed_cmd.code)) {
     case GcodeType::G0:
     case GcodeType::G1:
-      valid = gcodeParser.parseLinearMovementCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseLinearMovementCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::G2:
     case GcodeType::G3:
-      valid = gcodeParser.parseArcMovementCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseArcMovementCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::G92:
-      valid = gcodeParser.parseSetPositionCommand(params, parsed_cmd);
+      valid = parseSetPositionCommand(params, parsed_cmd);
       break;
     case GcodeType::G28:
-      valid = gcodeParser.parseHomingCommand(params, parsed_cmd);
+      valid = parseHomingCommand(params, parsed_cmd);
       break;
     case GcodeType::G29:
-      valid = gcodeParser.parseLevelingCommand(params, parsed_cmd);
+      valid = parseLevelingCommand(params, parsed_cmd);
       break;
     case GcodeType::G20:
     case GcodeType::G21:
     case GcodeType::G90:
     case GcodeType::G91:
-      valid = gcodeParser.parsePositioningCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parsePositioningCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::M104:
     case GcodeType::M109:
     case GcodeType::M140:
     case GcodeType::M190:
-      valid = gcodeParser.parseTemperatureCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseTemperatureCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::M106:
     case GcodeType::M107:
-      valid = gcodeParser.parseFanCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseFanCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::M82:
     case GcodeType::M83:
-      valid = gcodeParser.parseExtruderCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseExtruderCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::M17:
     case GcodeType::M18:
     case GcodeType::M84:
-      valid = gcodeParser.parseMotorsCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseMotorsCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::M20:
     case GcodeType::M21:
@@ -92,15 +92,15 @@ void GcodeParser::testParse(String cmd) {
     case GcodeType::M27:
     case GcodeType::M28:
     case GcodeType::M29:
-      valid = gcodeParser.parseSDCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseSDCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::M105:
     case GcodeType::M114:
     case GcodeType::M115:
-      valid = gcodeParser.parseReportingCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
+      valid = parseReportingCommand(params, parsed_cmd, static_cast<GcodeType>(parsed_cmd.code));
       break;
     case GcodeType::M112:
-      valid = gcodeParser.parseEmergencyCommand(params, parsed_cmd);
+      valid = parseEmergencyCommand(params, parsed_cmd);
       break;
     default:
       DEBUG_PRINTF_AUTO("Test: Code %c%d non supporté", parsed_cmd.type, raw_code);
@@ -202,7 +202,7 @@ bool GcodeParser::parseHomingCommand(String params, MotionCommand &cmd) {
     }
     char param_type = param.charAt(0);
     if (param.length() > 1) {
-      // Si une valeur est fournie (ex. X0, Y0), vérifier qu'elle est valide
+      // Si une valeur est fournie (ex. X0), vérifier qu'elle est nulle
       float value = param.substring(1).toFloat();
       if (value != 0.0f) {
         DEBUG_PRINTF_AUTO("Erreur: G28 ne supporte pas de valeurs non nulles pour %c", param_type);

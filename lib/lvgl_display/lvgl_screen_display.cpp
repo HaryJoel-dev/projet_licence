@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 LVGL_Display::LVGL_Display() : tft(), disp(nullptr), draw_buf(nullptr), lastTick(0) {}
-
+LVGL_Display display;
 void LVGL_Display::begin() {
     Serial.begin(115200);
     delay(500);
